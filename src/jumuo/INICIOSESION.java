@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package jumuo;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Practica
@@ -112,6 +115,11 @@ public class INICIOSESION extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
         jButton1.setText("INGRESAR");
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 96, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumuo/IMAGENES/usuario (1).png"))); // NOI18N
@@ -133,6 +141,29 @@ public class INICIOSESION extends javax.swing.JFrame {
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String correo = jTextField1.getText();
+        String contrasena = jTextField3.getText();
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("datos.csv"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[2].equals(correo) && parts[3].equals(contrasena)) {
+                    // Iniciar sesión
+                    JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+                    return;
+                }
+            }
+            // Si llegamos aquí, el inicio de sesión ha fallado
+            JOptionPane.showMessageDialog(null, "Error de inicio de sesión");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
